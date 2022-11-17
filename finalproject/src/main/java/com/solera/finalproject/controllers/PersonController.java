@@ -25,8 +25,6 @@ public class PersonController {
 
     @GetMapping
     public ResponseEntity<List<Person>> getAllPerson(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Access-Control-Allow-Origin", "http://localhost:3000");
         return new ResponseEntity<List<Person>>(
                 personService.getAllPerson(),
                 headers,
@@ -35,8 +33,6 @@ public class PersonController {
 
     @PostMapping
     public ResponseEntity<Person> postPerson(@RequestBody Person p) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Access-Control-Allow-Origin", "http://localhost:3000");
         return new ResponseEntity<>(
                 personService.insertPerson(p),
                 headers,
@@ -46,8 +42,6 @@ public class PersonController {
 
     @PutMapping
     public ResponseEntity<Person> updatePerson(@RequestBody Person p) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Access-Control-Allow-Origin", "http://localhost:3000");
 
         Person updatedPerson = personService.updatePerson(p);
         // Included a person without ID
