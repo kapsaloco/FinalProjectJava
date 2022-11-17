@@ -1,0 +1,14 @@
+version: "3"
+services:
+  db_blockchain:
+    image: postgres
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=db_person
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata_person:/var/lib/postgresql/data
+volumes:
+  pgdata_blockchain:
