@@ -10,12 +10,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table
+@Table(name="Person")
 public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type="")
+    @Type(type = "org.hibernate.type.PostgresUUIDType")
     @Column
     private UUID id;
     @Column
