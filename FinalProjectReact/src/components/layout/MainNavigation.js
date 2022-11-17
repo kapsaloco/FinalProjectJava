@@ -12,13 +12,10 @@ function MainNavigation() {
       <nav>
         <ul>
           <li>
-            <Link to="/login" style={{textDecoration: "none"}}>Login</Link>
+            <Link to="/api" style={{textDecoration: "none"}}>API</Link>
           </li>
           <li>
             <Link to="/about" style={{textDecoration: "none"}}>About</Link>
-          </li>
-          <li>
-            <Link to="/faq" style={{textDecoration: "none"}}>FAQ</Link>
           </li>
         </ul>
       </nav>
