@@ -1,6 +1,6 @@
 version: "3"
 services:
-  db_blockchain:
+  db_person:
     image: postgres
     environment:
       - POSTGRES_USER=root
