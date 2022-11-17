@@ -5,16 +5,28 @@ import com.solera.finalproject.repositories.PersonRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Service
 public class PersonService {
     @Autowired
     private PersonRepository personRepository;
-    // Service layer used for business logic. Not really a need for this project.
     public List<Person> getAllPerson() {
-        //List<Person> personList = null;
-        //personList = personRepository.findAll();
         return personRepository.findAll();
     }
-    public Person insertPerson(Person p) { return personRepository.save(p); }
+    public Person insertPerson(Person p) {
+        return personRepository.save(p);
+    }
+
+    public void deletePerson(Person p) {
+        personRepository.delete(p);
+    }
+
+    public Person updatePerson(Person p){
+        if(personRepository.findById(p.getId()).orElse((null)) == null){
+            return null;
+        } else {
+            return personRepository.save(p);
+        }
+    }
 }
