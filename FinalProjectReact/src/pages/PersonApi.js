@@ -3,7 +3,8 @@ import { useRef } from "react";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { useState, useEffect } from "react";
-import arrow from "./../images/arrow.png"
+import arrow from "./../images/arrow.png";
+import trash from "./../images/trashIcon.png";
 
 function PersonApi() {
   const [valueNum, setValue] = useState();
@@ -51,7 +52,6 @@ function PersonApi() {
   }, []);
 
   function getAllEntries() {
-    // console.log(flights);
     fetch("http://localhost:8080/api/person/", {
       method: "GET",
     })
@@ -63,6 +63,24 @@ function PersonApi() {
       });
   }
 
+  function deleteEntry(person){
+
+    fetch("http://localhost:8080/api/person", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(person),
+    })
+      .then((data) => {
+        console.log("New Person Added");
+        // window.location.assign("http://localhost:3000/Login#s=1");
+      })
+      .then(() => getAllEntries());
+  }
+
+
+
+
+
   return (
     <div className={classes.row} id="Set">
       <div className={classes.column}>
@@ -70,11 +88,23 @@ function PersonApi() {
           <form className={classes.form} onSubmit={submitHandler}>
             <div className={classes.control}>
               <label htmlFor="firstname">First Name</label>
-              <input type="text" required id="firstname" ref={firstnameRef} maxLength="25"/>
+              <input
+                type="text"
+                required
+                id="firstname"
+                ref={firstnameRef}
+                maxLength="25"
+              />
             </div>
             <div className={classes.control}>
               <label htmlFor="lastname">Last Name</label>
-              <input type="text" required id="lastname" ref={lastnameRef} maxLength="25"/>
+              <input
+                type="text"
+                required
+                id="lastname"
+                ref={lastnameRef}
+                maxLength="25"
+              />
             </div>
             <div className={classes.control}>
               <label htmlFor="address">Phone Number</label>
@@ -92,7 +122,13 @@ function PersonApi() {
             </div>
             <div className={classes.control}>
               <label htmlFor="description">E-mail</label>
-              <input type="text" required id="email" ref={emailRef} maxLength="25"/>
+              <input
+                type="text"
+                required
+                id="email"
+                ref={emailRef}
+                maxLength="25"
+              />
             </div>
 
             <div className={classes.actions}>
@@ -102,11 +138,10 @@ function PersonApi() {
         </div>
       </div>
 
-      
       <div className={classes.column}></div>
 
       <div className={classes.arrow}>
-        <img src={arrow}></img>
+        <img src={arrow} />
       </div>
 
       <div className={classes.column}>
@@ -115,13 +150,26 @@ function PersonApi() {
             personData.map((person) => (
               <div className={classes.datarow}>
                 <div className={classes.datainnerow}>
-                  <div className={classes.datainnercolumn}>First Name: <b>{person.firstName}</b> </div>
-                  <div className={classes.datainnercolumn}>Last Name: <b>{person.lastName}</b></div>
+                  <div className={classes.datainnercolumn}>
+                    First Name: <b>{person.firstName}</b>{" "}
+                  </div>
+                  <div className={classes.datainnercolumn}>
+                    Last Name: <b>{person.lastName}</b>
+                  </div>
                 </div>
 
                 <div className={classes.datainnerow}>
-                  <div className={classes.datainnercolumn}>Phone Number: <b>{person.lastName}</b></div>
-                  <div className={classes.datainnercolumn}>E-mail: <b>{person.lastName}</b></div>
+                  <div className={classes.datainnercolumn}>
+                    Phone Number: <b>{person.lastName}</b>
+                  </div>
+                  <div className={classes.datainnercolumn}>
+                    E-mail: <b>{person.lastName}</b>
+                  </div>
+                </div>
+                <div className={classes.trash}>
+                  <button onClick={()=> deleteEntry(person)}>
+                    <img src={trash} />
+                  </button>
                 </div>
               </div>
             ))}

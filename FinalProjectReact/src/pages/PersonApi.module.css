@@ -106,3 +106,16 @@
   width: auto;
   height: 130px;
 }
+.trash{
+    margin-left: 378px;
+    margin-top: -51px;
+}
+
+.trash button{
+  border: none;
+background: none;
+}
+.trash img{
+  width: auto;
+  height: 40px;
+}
