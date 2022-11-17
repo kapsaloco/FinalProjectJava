@@ -4,29 +4,55 @@ import com.solera.finalproject.models.Person;
 import com.solera.finalproject.services.PersonService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(path = "/person")
+// Context path is /api/...
 public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @CrossOrigin(origins ="http://localhost:3000")
-    @GetMapping(value="/person")
-    public List<Person> getAllPerson(){
-        return personService.getAllPerson();
+    @GetMapping
+    public ResponseEntity<List<Person>> getAllPerson(){
+        return new ResponseEntity<>(
+                personService.getAllPerson(),
+                HttpStatus.OK);
     }
 
-    @PostMapping("/person")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping
     public Person postPerson(@RequestBody Person p) {
         return personService.insertPerson(p);
+    }
+
+    @PutMapping
+    public ResponseEntity<Person> updatePerson(@RequestBody Person p) {
+        Person updatedPerson = personService.updatePerson(p);
+        // Included a person without ID
+        HttpStatus code = updatedPerson != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+
+        return new ResponseEntity<>(
+                updatedPerson,
+                code
+        );
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deletePerson(@RequestBody Person p) {
+        personService.deletePerson(p);
+        return new ResponseEntity<>(
+                "Successfully deleted person with id: " + p.getId(),
+                HttpStatus.OK
+        );
     }
 
 }
