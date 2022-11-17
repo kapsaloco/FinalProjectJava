@@ -18,7 +18,7 @@ public class PersonController {
     private PersonService personService;
 
     @CrossOrigin(origins ="http://localhost:3000")
-    @GetMapping(value="/get")
+    @GetMapping(value="/person")
     public List<Person> getAllPerson(){
         return personService.getAllPerson();
     }
