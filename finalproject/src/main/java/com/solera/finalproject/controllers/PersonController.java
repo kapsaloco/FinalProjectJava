@@ -25,9 +25,8 @@ public class PersonController {
 
     @GetMapping
     public ResponseEntity<List<Person>> getAllPerson(){
-        return new ResponseEntity<List<Person>>(
+        return new ResponseEntity<>(
                 personService.getAllPerson(),
-                headers,
                 HttpStatus.OK);
     }
 
@@ -35,7 +34,6 @@ public class PersonController {
     public ResponseEntity<Person> postPerson(@RequestBody Person p) {
         return new ResponseEntity<>(
                 personService.insertPerson(p),
-                headers,
                 HttpStatus.OK
         );
     }
@@ -49,20 +47,15 @@ public class PersonController {
 
         return new ResponseEntity<>(
                 updatedPerson,
-                headers,
                 code
         );
     }
 
     @DeleteMapping
     public ResponseEntity<String> deletePerson(@RequestBody Person p) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Access-Control-Allow-Origin", "http://localhost:3000");
-
         personService.deletePerson(p);
         return new ResponseEntity<>(
                 "Successfully deleted person with id: " + p.getId(),
-                headers,
                 HttpStatus.OK
         );
     }
