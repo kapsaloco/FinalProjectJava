@@ -10,7 +10,7 @@
   .formContainer{
     margin-top: 80px;
     margin-left: 100px;
-    background-color: white;
+    background-color: #FAF9F6	;
     height: 400px;
     width: 500px;
     border: 1px solid black;
@@ -40,6 +40,7 @@
     padding: 0.25rem;
     width: 60%;
     margin: auto;
+    background-color: #FAF9F6	;
   }
   
   .actions {
@@ -62,4 +63,15 @@
   .actions button:active {
     background-color: #a50e48;
     border-color: #a50e48;
+  }
+
+  .formContainerResults{
+    margin-top: 80px;
+    margin-right: 100px;
+    background-color: #FAF9F6	;
+    height: 400px;
+    width: 500px;
+    border: 1px solid black;
+    border-radius: 1%;
+    overflow-y: scroll;
   }

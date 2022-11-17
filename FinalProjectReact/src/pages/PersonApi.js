@@ -1,12 +1,11 @@
-import classes from "./PersonApi.module.css"
+import classes from "./PersonApi.module.css";
 import { useRef } from "react";
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input'
-import { useState } from 'react';
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
+import { useState, useEffect } from "react";
 
 function PersonApi() {
-
-  const [valueNum, setValue] = useState()
+  const [valueNum, setValue] = useState();
 
   const firstnameRef = useRef();
   const lastnameRef = useRef();
@@ -22,65 +21,91 @@ function PersonApi() {
     const enteredEmail = emailRef.current.value;
 
     const formData = {
-      firstname: enteredFirstName,
-      lastname: enteredLastName,
+      firstName: enteredFirstName,
+      lastName: enteredLastName,
       phoneNumber: enteredPhoneNumber,
       email: enteredEmail,
     };
-    
-    console.log(formData)
-    fetch("http://localhost:8080/api/person",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(formData)
 
-  }).then((data)=>{
-    console.log("New Person Added")
-    // window.location.assign("http://localhost:3000/Login#s=1");
-  })
+    console.log(formData);
+    fetch("http://localhost:8080/api/person", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    }).then((data) => {
+      console.log("New Person Added");
+      // window.location.assign("http://localhost:3000/Login#s=1");
+    }).then(() => getAllEntries());
+ 
     //function to handle the inputted data (will be used on API)
     // props.onAddMeetup(meetupData);
   }
 
+  const [personData, setPersonData] = useState();
+
+  useEffect(() => {
+    getAllEntries();
+  }, []);
+
+  function getAllEntries() {
+    // console.log(flights);
+    fetch("http://localhost:8080/api/person/", {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((actualData) => {
+        setPersonData(() => {
+          return actualData;
+        });
+      });
+  }
+
   return (
     <div className={classes.row} id="Set">
-
       <div className={classes.column}>
         <div className={classes.formContainer}>
-        <form className={classes.form} onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor="firstname">First Name</label>
-          <input type="text" required id="firstname" ref={firstnameRef} />
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="lastname">Last Name</label>
-          <input type="text" required id="lastname" ref={lastnameRef} />
-        </div>
-        <div className={classes.control}>
-        <label htmlFor="address">Phone Number</label>
-            <PhoneInput
-          placeholder="Enter phone number"
-          value={valueNum}
-          ref={phonenumberRef}
-          onChange={setValue}
-          style={{width: "71%", marginLeft: "48px"}}
-         />
-          
-          {/* <input type="text" required id="number" ref={phonenumberRef} /> */}
-        </div>
-        <div className={classes.control}>
-          <label htmlFor="description">E-mail</label>
-          <input type="text" required id="email" ref={emailRef} />
-        </div>
+          <form className={classes.form} onSubmit={submitHandler}>
+            <div className={classes.control}>
+              <label htmlFor="firstname">First Name</label>
+              <input type="text" required id="firstname" ref={firstnameRef} />
+            </div>
+            <div className={classes.control}>
+              <label htmlFor="lastname">Last Name</label>
+              <input type="text" required id="lastname" ref={lastnameRef} />
+            </div>
+            <div className={classes.control}>
+              <label htmlFor="address">Phone Number</label>
+              <PhoneInput
+                placeholder="Enter phone number"
+                value={valueNum}
+                ref={phonenumberRef}
+                onChange={setValue}
+                style={{ width: "71%", marginLeft: "48px" }}
+              />
 
-        <div className={classes.actions}>
-          <button>Add Person</button>
-        </div>
-      </form>
+              {/* <input type="text" required id="number" ref={phonenumberRef} /> */}
+            </div>
+            <div className={classes.control}>
+              <label htmlFor="description">E-mail</label>
+              <input type="text" required id="email" ref={emailRef} />
+            </div>
+
+            <div className={classes.actions}>
+              <button>Add Person</button>
+            </div>
+          </form>
         </div>
       </div>
-      
+
       <div className={classes.column}></div>
+
+      <div className={classes.column}>
+        <div className={classes.formContainerResults}>
+          {personData && personData.map((person) => (
+            <div>Hello</div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
