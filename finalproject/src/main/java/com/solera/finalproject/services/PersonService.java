@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 public class PersonService {
     @Autowired
     private PersonRepository personRepository;
-
+    // Service layer used for business logic. Not really a need for this project.
     public List<Person> getAllPerson() {
+        //List<Person> personList = null;
+        //personList = personRepository.findAll();
         return personRepository.findAll();
     }
+    public Person insertPerson(Person p) { return personRepository.save(p); }
 }

@@ -1,5 +1,6 @@
 package com.solera.finalproject.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,13 +17,14 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Type(type = "org.hibernate.type.PostgresUUIDType")
-    @Column
+    @JsonIgnore
+    @Column(name="id")
     private UUID id;
-    @Column
+    @Column(name="firstName")
     private String firstName;
-    @Column
+    @Column(name="lastName")
     private String lastName;
-    @Column
+    @Column(name="phoneNumber")
     private String phoneNumber;
     @Column
     private String email;
